@@ -20,6 +20,8 @@ function onInput(e) {
     if (country === '') {
         refs.listEl.classList.add('hidden');
         refs.countryInfoEl.classList.add('hidden');
+        refs.listEl.innerHTML = '';
+        refs.countryInfoEl.innerHTML = '';
         return
     }
      
