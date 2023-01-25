@@ -504,11 +504,11 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"8lqZg":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _stylesCss = require("./css/styles.css");
 var _lodashDebounce = require("lodash.debounce");
 var _lodashDebounceDefault = parcelHelpers.interopDefault(_lodashDebounce);
 var _notiflix = require("notiflix");
-var _stylesCss = require("./css/styles.css");
-var _fetchCountries = require("./fetchCountries");
+var _fetchCountriesJs = require("./fetchCountries.js");
 const DEBOUNCE_DELAY = 300;
 const refs = {
     inputEl: document.querySelector("#search-box"),
@@ -521,9 +521,11 @@ function onInput(e) {
     if (country === "") {
         refs.listEl.classList.add("hidden");
         refs.countryInfoEl.classList.add("hidden");
+        refs.listEl.innerHTML = "";
+        refs.countryInfoEl.innerHTML = "";
         return;
     }
-    (0, _fetchCountries.fetchCountries)(country).then((data)=>{
+    (0, _fetchCountriesJs.fetchCountries)(country).then((data)=>{
         if (!data) (0, _notiflix.Notify).failure("Oops, there is no country with that name");
         if (data.length === 1) {
             refs.listEl.classList.add("hidden");
@@ -568,9 +570,8 @@ function createFewCountriesMarkup(arrayOfCountries) {
 function makeCountryLanguagesString(objLanguages) {
     return Object.values(objLanguages).join(", ");
 }
-console.log("hi");
 
-},{"lodash.debounce":"3JP5n","notiflix":"5z0Oc","./css/styles.css":"1CY4s","./fetchCountries":"fTQqv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3JP5n":[function(require,module,exports) {
+},{"lodash.debounce":"3JP5n","notiflix":"5z0Oc","./css/styles.css":"1CY4s","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./fetchCountries.js":"fTQqv"}],"3JP5n":[function(require,module,exports) {
 var global = arguments[3];
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -1614,20 +1615,7 @@ var global = arguments[3];
     };
 });
 
-},{}],"1CY4s":[function() {},{}],"fTQqv":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "fetchCountries", ()=>fetchCountries);
-function fetchCountries(name) {
-    return fetch(`https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,flags,languages`).then((response)=>{
-        if (!response.ok) return false;
-        return response.json();
-    }).then((data)=>{
-        return data;
-    });
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+},{}],"1CY4s":[function() {},{}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -1657,6 +1645,19 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["1RB6v","8lqZg"], "8lqZg", "parcelRequired7c6")
+},{}],"fTQqv":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "fetchCountries", ()=>fetchCountries);
+function fetchCountries(name) {
+    return fetch(`https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,flags,languages`).then((response)=>{
+        if (!response.ok) return false;
+        return response.json();
+    }).then((data)=>{
+        return data;
+    });
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["1RB6v","8lqZg"], "8lqZg", "parcelRequired7c6")
 
 //# sourceMappingURL=index.975ef6c8.js.map
