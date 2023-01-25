@@ -2,12 +2,12 @@
   "name": "parcel-project-template",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://github.com/annakrysenko/goit-js-hw-10",
+  "homepage": "https://annakrysenko.github.io/goit-js-hw-10",
   "scripts": {
     "start": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /goit-js-hw-10/"
   },
-  "repository": {
+  "repository": {"directory": "",
     "type": "git",
     "url": "git+https://github.com/goitacademy/parcel-project-template.git"
   },
