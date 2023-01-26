@@ -28,6 +28,7 @@ function onInput(e) {
     fetchCountries(country)
         .then(data => {
             if (!data) {
+                console.log(data)
                 Notify.failure('Oops, there is no country with that name');
             }
 
@@ -59,9 +60,9 @@ function createOneCountryMarkup(arrayCountry) {
                 <img src='${country.flags.svg}' class='country-flag'>
                 <span class='country-name'><b>${country.name.official}</b></span>
             </p>
-			<p><b>Capital:</b> ${country.capital}</p>
+			<p><b>Capital:</b> ${makeArrayToString(country.capital)}</p>
 			<p><b>Population:</b> ${country.population}</p>
-			<p><b>Languages:</b> ${makeCountryLanguagesString(country.languages)}</p>
+			<p><b>Languages:</b> ${makeArrayToString(country.languages)}</p>
 		</div>
 		`;
     })
@@ -86,7 +87,7 @@ function createFewCountriesMarkup(arrayOfCountries) {
 
 }
 
-function makeCountryLanguagesString(objLanguages) {
+function makeArrayToString(objLanguages) {
   return Object.values(objLanguages).join(', ');
 }
 
