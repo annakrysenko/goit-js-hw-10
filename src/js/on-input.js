@@ -1,6 +1,9 @@
 import { Notify } from 'notiflix';
-import { fetchCountries } from './fetchCountries.js'
-import { refs } from'./DOM.js'
+import { fetchCountries } from './fetchCountries.js';
+
+import { refs } from './DOM.js';
+import { createFewCountriesMarkup } from './many-contries-murkup';
+import { createOneCountryMarkup } from './one-country-markup';
 
 export function onInput(e) {
     const country = e.target.value.trim();
@@ -39,41 +42,3 @@ export function onInput(e) {
         })
 }
 
-function createOneCountryMarkup(arrayCountry) {
-    const markup = arrayCountry.map(country => {
-        return  `
-		<div class='country-card'>
-			<p class='country-card__name'>
-                <img src='${country.flags.svg}' class='country-flag'>
-                <span class='country-name'><b>${country.name.official}</b></span>
-            </p>
-			<p><b>Capital:</b> ${makeArrayToString(country.capital)}</p>
-			<p><b>Population:</b> ${country.population}</p>
-			<p><b>Languages:</b> ${makeArrayToString(country.languages)}</p>
-		</div>
-		`;
-    })
-        .join('');
-   
-    return markup
-}
-
-function createFewCountriesMarkup(arrayOfCountries) {
-    const markup = arrayOfCountries
-        .map(country => {
-        return `
-            <li class='country-preview'>
-                <img src='${country.flags.svg}' class='country-flag'>
-                <span class='country-name'>${country.name.official}</span>
-            </li>
-            `;
-        })
-        .join('');
-
-    return markup;
-
-}
-
-function makeArrayToString(objLanguages) {
-  return Object.values(objLanguages).join(', ');
-}

@@ -844,6 +844,8 @@ parcelHelpers.export(exports, "onInput", ()=>onInput);
 var _notiflix = require("notiflix");
 var _fetchCountriesJs = require("./fetchCountries.js");
 var _domJs = require("./DOM.js");
+var _manyContriesMurkup = require("./many-contries-murkup");
+var _oneCountryMarkup = require("./one-country-markup");
 function onInput(e) {
     const country = e.target.value.trim();
     if (country === "") {
@@ -862,47 +864,17 @@ function onInput(e) {
             (0, _domJs.refs).listEl.classList.add("hidden");
             (0, _domJs.refs).countryInfoEl.classList.remove("hidden");
             (0, _domJs.refs).listEl.innerHTML;
-            (0, _domJs.refs).countryInfoEl.innerHTML = createOneCountryMarkup(data);
+            (0, _domJs.refs).countryInfoEl.innerHTML = (0, _oneCountryMarkup.createOneCountryMarkup)(data);
         } else if (data.length > 1 && data.length <= 10) {
             (0, _domJs.refs).listEl.classList.remove("hidden");
             (0, _domJs.refs).countryInfoEl.classList.add("hidden");
             (0, _domJs.refs).countryInfoEl.innerHTML;
-            (0, _domJs.refs).listEl.innerHTML = createFewCountriesMarkup(data);
+            (0, _domJs.refs).listEl.innerHTML = (0, _manyContriesMurkup.createFewCountriesMarkup)(data);
         } else if (data.length > 10) (0, _notiflix.Notify).info("Too many matches found. Please enter a more specific name");
     });
 }
-function createOneCountryMarkup(arrayCountry) {
-    const markup = arrayCountry.map((country)=>{
-        return `
-		<div class='country-card'>
-			<p class='country-card__name'>
-                <img src='${country.flags.svg}' class='country-flag'>
-                <span class='country-name'><b>${country.name.official}</b></span>
-            </p>
-			<p><b>Capital:</b> ${makeArrayToString(country.capital)}</p>
-			<p><b>Population:</b> ${country.population}</p>
-			<p><b>Languages:</b> ${makeArrayToString(country.languages)}</p>
-		</div>
-		`;
-    }).join("");
-    return markup;
-}
-function createFewCountriesMarkup(arrayOfCountries) {
-    const markup = arrayOfCountries.map((country)=>{
-        return `
-            <li class='country-preview'>
-                <img src='${country.flags.svg}' class='country-flag'>
-                <span class='country-name'>${country.name.official}</span>
-            </li>
-            `;
-    }).join("");
-    return markup;
-}
-function makeArrayToString(objLanguages) {
-    return Object.values(objLanguages).join(", ");
-}
 
-},{"notiflix":"5z0Oc","./fetchCountries.js":"dKuy9","./DOM.js":"fAYeS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5z0Oc":[function(require,module,exports) {
+},{"notiflix":"5z0Oc","./fetchCountries.js":"dKuy9","./DOM.js":"fAYeS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./many-contries-murkup":"lfXDa","./one-country-markup":"azTaE"}],"5z0Oc":[function(require,module,exports) {
 var global = arguments[3];
 /* Notiflix AIO (https://notiflix.github.io) - Version: 3.2.6 - Author: Furkan (https://github.com/furcan) - Copyright 2019 - 2023 Notiflix, MIT Licence (https://opensource.org/licenses/MIT) */ (function(t, e) {
     "function" == typeof define && define.amd ? define([], function() {
@@ -1672,6 +1644,46 @@ function fetchCountries(name) {
     }).then((data)=>{
         return data;
     });
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lfXDa":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createFewCountriesMarkup", ()=>createFewCountriesMarkup);
+function createFewCountriesMarkup(arrayOfCountries) {
+    const markup = arrayOfCountries.map((country)=>{
+        return `
+            <li class='country-preview'>
+                <img src='${country.flags.svg}' class='country-flag'>
+                <span class='country-name'>${country.name.official}</span>
+            </li>
+            `;
+    }).join("");
+    return markup;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"azTaE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createOneCountryMarkup", ()=>createOneCountryMarkup);
+function createOneCountryMarkup(arrayCountry) {
+    const markup = arrayCountry.map((country)=>{
+        return `
+		<div class='country-card'>
+			<p class='country-card__name'>
+                <img src='${country.flags.svg}' class='country-flag'>
+                <span class='country-name'><b>${country.name.official}</b></span>
+            </p>
+			<p><b>Capital:</b> ${makeArrayToString(country.capital)}</p>
+			<p><b>Population:</b> ${country.population}</p>
+			<p><b>Languages:</b> ${makeArrayToString(country.languages)}</p>
+		</div>
+		`;
+    }).join("");
+    return markup;
+}
+function makeArrayToString(obj) {
+    return Object.values(obj).join(", ");
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["1RB6v","8lqZg"], "8lqZg", "parcelRequired7c6")
