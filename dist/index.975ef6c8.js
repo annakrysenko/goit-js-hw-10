@@ -507,74 +507,12 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _stylesCss = require("./css/styles.css");
 var _lodashDebounce = require("lodash.debounce");
 var _lodashDebounceDefault = parcelHelpers.interopDefault(_lodashDebounce);
-var _notiflix = require("notiflix");
-var _fetchCountriesJs = require("./fetchCountries.js");
+var _domJs = require("./js/DOM.js");
+var _onInput = require("./js/on-input");
 const DEBOUNCE_DELAY = 300;
-const refs = {
-    inputEl: document.querySelector("#search-box"),
-    listEl: document.querySelector(".country-list"),
-    countryInfoEl: document.querySelector(".country-info")
-};
-refs.inputEl.addEventListener("input", (0, _lodashDebounceDefault.default)(onInput, DEBOUNCE_DELAY));
-function onInput(e) {
-    const country = e.target.value.trim();
-    if (country === "") {
-        refs.listEl.classList.add("hidden");
-        refs.countryInfoEl.classList.add("hidden");
-        refs.listEl.innerHTML = "";
-        refs.countryInfoEl.innerHTML = "";
-        return;
-    }
-    (0, _fetchCountriesJs.fetchCountries)(country).then((data)=>{
-        if (!data) {
-            console.log(data);
-            (0, _notiflix.Notify).failure("Oops, there is no country with that name");
-        }
-        if (data.length === 1) {
-            refs.listEl.classList.add("hidden");
-            refs.countryInfoEl.classList.remove("hidden");
-            refs.listEl.innerHTML;
-            refs.countryInfoEl.innerHTML = createOneCountryMarkup(data);
-        } else if (data.length > 1 && data.length <= 10) {
-            refs.listEl.classList.remove("hidden");
-            refs.countryInfoEl.classList.add("hidden");
-            refs.countryInfoEl.innerHTML;
-            refs.listEl.innerHTML = createFewCountriesMarkup(data);
-        } else if (data.length > 10) (0, _notiflix.Notify).info("Too many matches found. Please enter a more specific name");
-    });
-}
-function createOneCountryMarkup(arrayCountry) {
-    const markup = arrayCountry.map((country)=>{
-        return `
-		<div class='country-card'>
-			<p class='country-card__name'>
-                <img src='${country.flags.svg}' class='country-flag'>
-                <span class='country-name'><b>${country.name.official}</b></span>
-            </p>
-			<p><b>Capital:</b> ${makeArrayToString(country.capital)}</p>
-			<p><b>Population:</b> ${country.population}</p>
-			<p><b>Languages:</b> ${makeArrayToString(country.languages)}</p>
-		</div>
-		`;
-    }).join("");
-    return markup;
-}
-function createFewCountriesMarkup(arrayOfCountries) {
-    const markup = arrayOfCountries.map((country)=>{
-        return `
-            <li class='country-preview'>
-                <img src='${country.flags.svg}' class='country-flag'>
-                <span class='country-name'>${country.name.official}</span>
-            </li>
-            `;
-    }).join("");
-    return markup;
-}
-function makeArrayToString(objLanguages) {
-    return Object.values(objLanguages).join(", ");
-}
+(0, _domJs.refs).inputEl.addEventListener("input", (0, _lodashDebounceDefault.default)((0, _onInput.onInput), DEBOUNCE_DELAY));
 
-},{"lodash.debounce":"3JP5n","notiflix":"5z0Oc","./css/styles.css":"1CY4s","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./fetchCountries.js":"fTQqv"}],"3JP5n":[function(require,module,exports) {
+},{"lodash.debounce":"3JP5n","./css/styles.css":"1CY4s","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./js/DOM.js":"fAYeS","./js/on-input":"inKAH"}],"3JP5n":[function(require,module,exports) {
 var global = arguments[3];
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -859,7 +797,112 @@ var global = arguments[3];
 }
 module.exports = debounce;
 
-},{}],"5z0Oc":[function(require,module,exports) {
+},{}],"1CY4s":[function() {},{}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"fAYeS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "refs", ()=>refs);
+const refs = {
+    inputEl: document.querySelector("#search-box"),
+    listEl: document.querySelector(".country-list"),
+    countryInfoEl: document.querySelector(".country-info")
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"inKAH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "onInput", ()=>onInput);
+var _notiflix = require("notiflix");
+var _fetchCountriesJs = require("./fetchCountries.js");
+var _domJs = require("./DOM.js");
+function onInput(e) {
+    const country = e.target.value.trim();
+    if (country === "") {
+        (0, _domJs.refs).listEl.classList.add("hidden");
+        (0, _domJs.refs).countryInfoEl.classList.add("hidden");
+        (0, _domJs.refs).listEl.innerHTML = "";
+        (0, _domJs.refs).countryInfoEl.innerHTML = "";
+        return;
+    }
+    (0, _fetchCountriesJs.fetchCountries)(country).then((data)=>{
+        if (!data) {
+            console.log(data);
+            (0, _notiflix.Notify).failure("Oops, there is no country with that name");
+        }
+        if (data.length === 1) {
+            (0, _domJs.refs).listEl.classList.add("hidden");
+            (0, _domJs.refs).countryInfoEl.classList.remove("hidden");
+            (0, _domJs.refs).listEl.innerHTML;
+            (0, _domJs.refs).countryInfoEl.innerHTML = createOneCountryMarkup(data);
+        } else if (data.length > 1 && data.length <= 10) {
+            (0, _domJs.refs).listEl.classList.remove("hidden");
+            (0, _domJs.refs).countryInfoEl.classList.add("hidden");
+            (0, _domJs.refs).countryInfoEl.innerHTML;
+            (0, _domJs.refs).listEl.innerHTML = createFewCountriesMarkup(data);
+        } else if (data.length > 10) (0, _notiflix.Notify).info("Too many matches found. Please enter a more specific name");
+    });
+}
+function createOneCountryMarkup(arrayCountry) {
+    const markup = arrayCountry.map((country)=>{
+        return `
+		<div class='country-card'>
+			<p class='country-card__name'>
+                <img src='${country.flags.svg}' class='country-flag'>
+                <span class='country-name'><b>${country.name.official}</b></span>
+            </p>
+			<p><b>Capital:</b> ${makeArrayToString(country.capital)}</p>
+			<p><b>Population:</b> ${country.population}</p>
+			<p><b>Languages:</b> ${makeArrayToString(country.languages)}</p>
+		</div>
+		`;
+    }).join("");
+    return markup;
+}
+function createFewCountriesMarkup(arrayOfCountries) {
+    const markup = arrayOfCountries.map((country)=>{
+        return `
+            <li class='country-preview'>
+                <img src='${country.flags.svg}' class='country-flag'>
+                <span class='country-name'>${country.name.official}</span>
+            </li>
+            `;
+    }).join("");
+    return markup;
+}
+function makeArrayToString(objLanguages) {
+    return Object.values(objLanguages).join(", ");
+}
+
+},{"notiflix":"5z0Oc","./fetchCountries.js":"dKuy9","./DOM.js":"fAYeS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5z0Oc":[function(require,module,exports) {
 var global = arguments[3];
 /* Notiflix AIO (https://notiflix.github.io) - Version: 3.2.6 - Author: Furkan (https://github.com/furcan) - Copyright 2019 - 2023 Notiflix, MIT Licence (https://opensource.org/licenses/MIT) */ (function(t, e) {
     "function" == typeof define && define.amd ? define([], function() {
@@ -1618,37 +1661,7 @@ var global = arguments[3];
     };
 });
 
-},{}],"1CY4s":[function() {},{}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"fTQqv":[function(require,module,exports) {
+},{}],"dKuy9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "fetchCountries", ()=>fetchCountries);
